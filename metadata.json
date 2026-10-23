@@ -1,0 +1,6 @@
+{
+  "name": "ChargeWise GreenGrid AI",
+  "description": "An intelligent EV charging and energy management platform that optimizes charging schedules using solar energy, grid constraints, and explainable AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
