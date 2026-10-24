@@ -94,3 +94,36 @@ export interface ScenarioHistoryEntry {
   m: string;
   u: string;
 }
+
+export interface ConnectorSpec {
+  standard: 'CCS-2' | 'Type 2 AC' | 'Bharat DC-001' | 'GB/T' | 'CHAdeMO' | 'Ather LEV';
+  count: number;
+  powerKw: number;
+}
+
+export interface IndiaStation {
+  id: string;
+  name: string;
+  state: string;
+  city: string;
+  address: string;
+  lat: number;
+  lng: number;
+  network: string;
+  connectors: ConnectorSpec[];
+  totalPowerKw: number;
+  status: 'Available' | 'Busy' | 'Operational' | 'Under Maintenance';
+  pricing: string;
+  hours: string;
+  amenities: string[];
+  isSolarPowered?: boolean;
+  contact?: string;
+}
+
+export interface IndiaStateInfo {
+  code: string;
+  name: string;
+  center: [number, number];
+  zoom: number;
+}
+

@@ -53,6 +53,7 @@ export default function App() {
       const hash = window.location.hash.replace('#', '') || 'home';
       const dashboardTabs = [
         'overview',
+        'india',
         'map',
         'opt',
         'fleet',
@@ -158,6 +159,13 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleOpenIndiaLocator = () => {
+    setCurrentView('dashboard');
+    setActiveNavTab('india');
+    window.location.hash = '#india';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleGoToLanding = () => {
     setCurrentView('landing');
     window.location.hash = '#home';
@@ -181,6 +189,7 @@ export default function App() {
           onLaunchDashboard={handleLaunchDashboard}
           onWatchDemo={handleReplayIntro}
           onOpenMap={handleOpenMap}
+          onOpenIndiaLocator={handleOpenIndiaLocator}
           comparison={comparison}
         />
       ) : (

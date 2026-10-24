@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Zap,
   Sun,
@@ -16,11 +15,14 @@ import {
 } from 'lucide-react';
 import { DualComparison } from '../optimizer/engine';
 import { formatNumber } from '../optimizer/engine';
+import heroSolarEvHub from '../assets/images/hero_solar_ev_hub.jpg';
+import stationHubPreview from '../assets/images/station_hub_preview.jpg';
 
 interface LandingPageProps {
   onLaunchDashboard: () => void;
   onWatchDemo: () => void;
   onOpenMap: () => void;
+  onOpenIndiaLocator?: () => void;
   comparison: DualComparison;
 }
 
@@ -28,6 +30,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onLaunchDashboard,
   onWatchDemo,
   onOpenMap,
+  onOpenIndiaLocator,
   comparison,
 }) => {
   const o = comparison.o.m;
@@ -195,7 +198,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200/90 shadow-2xl bg-slate-900 group">
               <img
-                src="/src/assets/images/hero_solar_ev_hub_1792766869834.jpg"
+                src={heroSolarEvHub || '/assets/images/hero_solar_ev_hub.jpg'}
+                onError={(e) => {
+                  e.currentTarget.src = '/assets/images/hero_solar_ev_hub.jpg';
+                }}
                 alt="Solar canopy charging station with electric cars"
                 className="w-full h-[460px] object-cover group-hover:scale-102 transition-transform duration-700"
                 referrerPolicy="no-referrer"
@@ -461,7 +467,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-4 flex flex-wrap items-center gap-3">
               <button
                 onClick={onOpenMap}
                 className="px-5 py-3 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-md"
@@ -470,6 +476,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span>Open Satellite Map</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
+
+              {onOpenIndiaLocator && (
+                <button
+                  onClick={onOpenIndiaLocator}
+                  className="px-5 py-3 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+                >
+                  <MapPin className="w-4 h-4 text-emerald-600" />
+                  <span>India EV Station Locator</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -477,7 +494,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="p-3 bg-slate-950 rounded-2xl shadow-xl border border-slate-800">
               <div className="relative h-72 rounded-xl overflow-hidden bg-slate-900">
                 <img
-                  src="/src/assets/images/station_hub_preview_1792766869942.jpg"
+                  src={stationHubPreview || '/assets/images/station_hub_preview.jpg'}
+                  onError={(e) => {
+                    e.currentTarget.src = '/assets/images/station_hub_preview.jpg';
+                  }}
                   alt="Satellite map view preview"
                   className="w-full h-full object-cover opacity-80"
                   referrerPolicy="no-referrer"

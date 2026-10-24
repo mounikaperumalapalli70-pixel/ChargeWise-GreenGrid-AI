@@ -3,6 +3,7 @@ import L from 'leaflet';
 import { STATIONS, formatNumber } from '../optimizer/engine';
 import { StationData } from '../types';
 import { Search, MapPin, Zap, Sun, Battery, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import stationHubPreview from '../assets/images/station_hub_preview.jpg';
 
 interface SatelliteMapProps {
   selectedStationName: string;
@@ -411,7 +412,10 @@ export const SatelliteMap: React.FC<SatelliteMapProps> = ({
             {/* Station Real Photo / Render Thumbnail */}
             <div className="relative h-32 rounded-xl overflow-hidden mb-4 border border-slate-100 shadow-inner">
               <img
-                src="/src/assets/images/station_hub_preview_1792766869942.jpg"
+                src={stationHubPreview || '/assets/images/station_hub_preview.jpg'}
+                onError={(e) => {
+                  e.currentTarget.src = '/assets/images/station_hub_preview.jpg';
+                }}
                 alt="Station hub canopy"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

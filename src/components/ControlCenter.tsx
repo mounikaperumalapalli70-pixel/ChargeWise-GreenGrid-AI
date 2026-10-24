@@ -26,6 +26,7 @@ import {
   Menu,
   X,
   ArrowLeft,
+  MapPin,
 } from 'lucide-react';
 import {
   OptimizerState,
@@ -39,8 +40,9 @@ import {
   validateInputs,
   DualComparison,
 } from '../optimizer/engine';
-import { StationData, ScenarioHistoryEntry, EV } from '../types';
+import { StationData, ScenarioHistoryEntry, EV, IndiaStation } from '../types';
 import { SatelliteMap } from './SatelliteMap';
+import { IndiaEVLocator } from './IndiaEVLocator';
 
 interface ControlCenterProps {
   state: OptimizerState;
@@ -149,6 +151,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'india', label: 'India EV Locator', icon: MapPin },
     { id: 'map', label: 'Satellite Intelligence', icon: Compass },
     { id: 'opt', label: 'Charging Optimizer', icon: Zap },
     { id: 'fleet', label: 'EV Fleet', icon: Car },
@@ -714,6 +717,27 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
                 </div>
               </div>
             </div>
+          )}
+
+          {/* VIEW: INDIA EV LOCATOR */}
+          {activeNavTab === 'india' && (
+            <IndiaEVLocator
+              onLoadStationInOptimizer={(st: IndiaStation) => {
+                const highestPowerConn = [...st.connectors].sort((a, b) => b.powerKw - a.powerKw)[0];
+                const chargerKw = highestPowerConn ? highestPowerConn.powerKw : 50;
+                const totalBays = st.connectors.reduce((acc, c) => acc + c.count, 0) || 4;
+
+                setState((prev) => ({
+                  ...prev,
+                  station: `${st.name} (${st.city})`,
+                  n: Math.min(totalBays, 12),
+                  cp: chargerKw,
+                  grid: Math.max(30, Math.round(st.totalPowerKw * 0.85)),
+                  msg: `✓ Loaded real-world station: ${st.name} (${st.city}, ${st.state}) into Charging Optimizer. Configured ${totalBays} charging bay(s) at ${chargerKw} kW.`,
+                }));
+                setActiveNavTab('opt');
+              }}
+            />
           )}
 
           {/* VIEW: SATELLITE MAP */}
